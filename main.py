@@ -8,12 +8,12 @@ tiles = ['', '', '',
          '', '', '',
          '', '', '']
 
-
+# Dont new lines so they can see previous moves instead of clearing lines
 def clearConsole():  # move to new script
     for i in range(15):
         print("\n")
 
-
+# print out the board
 def printBoard(pos):
     if pos != 0:
         sleep(1)
@@ -29,7 +29,7 @@ def printBoard(pos):
     print("_______________")
     print("3 " + tiles[6] + "\t| " + tiles[7] + "\t| " + tiles[8] + "\t")
 
-
+# ask user for a position input
 def askForPositions():
     if not isXTurn:
         print("O's Turn\n")
@@ -50,7 +50,7 @@ def askForPositions():
         xPos = input("Enter Your X-Position (1-3): \n")
     return [int(yPos), int(xPos), False]
 
-
+# checks if tile is taken, if not place an x or o there depending on the turn
 def checkIfPositionIsTaken(pos):
     for i in range(9):
         if pos == board[i]:
@@ -87,13 +87,24 @@ def checkWinCondition():
     # else game isn't over
     return False
 
+# checks if all tiles are taken up
+def checkDrawCondition():
+    for i in range(len(tiles)):
+        if tiles[i] == '':
+            return False
+    return True
+
 
 printBoard(0)
-while not checkWinCondition():
+# create gameplay loop
+while not checkWinCondition() and not checkDrawCondition():
     checkIfPositionIsTaken(askForPositions())
     printBoard(1)
 
-if isXTurn:
+#Game Over printing
+if checkDrawCondition():
+    print("GAME OVER! DRAW!")
+elif isXTurn:
     print("GAME OVER O Wins")
 else:
     print("GAME OVER X Wins")
