@@ -10,8 +10,7 @@ tiles = ['', '', '',
 
 # Dont new lines so they can see previous moves instead of clearing lines
 def clearConsole():  # move to new script
-    for i in range(15):
-        print("\n")
+    print("\n" * 15)  # no need for a for loop
 
 # print out the board
 def printBoard(pos):
@@ -70,19 +69,24 @@ def checkIfPositionIsTaken(pos):
 
 
 def checkWinCondition():
-    # straight Across Wins
-    if tiles[0:3] == ['x', 'x', 'x'] or tiles[0:3] == ['o', 'o', 'o'] or tiles[3:6] == ['x', 'x', 'x'] \
-            or tiles[3:6] == ['o', 'o', 'o'] or tiles[6:10] == ['x', 'x', 'x'] or tiles[6:10] == ['o', 'o', 'o']:
+
+    lines = [
+        # --- horizontal ---
+        tiles[0:3],
+        tiles[3:6],
+        tiles[6:9],
+        # --- vertical ---
+        tiles[0:9:3],
+        tiles[1:9:3],
+        tiles[2:9:3],
+        # --- diagonal ---
+        tiles[0:9:4],
+        tiles[2:7:2]
+        ]
+    assert all(len(line) == 3 for line in lines)  # program fails if any line indexes have length > 3
+    if any(filled_with_Xs(line) or filled_with_Xs(line) for line in lines):  # Line = lines[i] (or tiles[x:x])
         return True
-    # down Wins
-    if (tiles[0] == tiles[3] and tiles[3] == tiles[6] and tiles[6] != '') or \
-            (tiles[1] == tiles[4] and tiles[4] == tiles[7] and tiles[7] != '') \
-            or (tiles[2] == tiles[5] and tiles[5] == tiles[8] and tiles[8] != ''):
-        return True
-    # Diagonal Wins
-    if (tiles[0] == tiles[4] and tiles[4] == tiles[8] and tiles[0] != '') or \
-            (tiles[2] == tiles[4] and tiles[4] == tiles[6] and tiles[2] != ''):
-        return True
+# The any() function returns True if any element of an iterable is True. If not, it returns False.
 
     # else game isn't over
     return False
@@ -94,19 +98,26 @@ def checkDrawCondition():
             return False
     return True
 
+def filled_with_Os(line):
+    return line == ['o', 'o', 'o']  # returns true of an line in lines has a list containing 3 o's
+def filled_with_Xs(line):
+    return line == ['x', 'x', 'x']  # returns true of an line in lines has a list containing 3 X's
 
+
+# print(board[0][2]) use this to reference part of a 2D list
 printBoard(0)
 # create gameplay loop
 while not checkWinCondition() and not checkDrawCondition():
     checkIfPositionIsTaken(askForPositions())
     printBoard(1)
 
-#Game Over printing
+# Game Over printing
 if checkDrawCondition():
     print("GAME OVER! DRAW!")
 elif isXTurn:
     print("GAME OVER O Wins")
 else:
     print("GAME OVER X Wins")
+
 
 exit(0)
