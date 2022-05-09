@@ -98,7 +98,7 @@ def checkDrawCondition():
             return False
     return True
 
-def filled_with_Os(line):
+def filled_with_Os(line):  # I like these declared outside of the scope of another function, more like c++
     return line == ['o', 'o', 'o']  # returns true of an line in lines has a list containing 3 o's
 def filled_with_Xs(line):
     return line == ['x', 'x', 'x']  # returns true of an line in lines has a list containing 3 X's
