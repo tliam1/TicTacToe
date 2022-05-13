@@ -19,14 +19,12 @@ def printBoard(pos):
         clearConsole()
     else:
         print("Welcome To Python TIC-TAC-TOE!\n")
-
-    print("  1   2   3")
-    print("1 " + tiles[0] + "\t| " + tiles[1] + "\t| " + tiles[
+    print(tiles[0] + "\t| " + tiles[1] + "\t| " + tiles[
         2] + "\t")  # make a function from this and move to new script
     print("_______________")
-    print("2 " + tiles[3] + "\t| " + tiles[4] + "\t| " + tiles[5] + "\t")
+    print(tiles[3] + "\t| " + tiles[4] + "\t| " + tiles[5] + "\t")
     print("_______________")
-    print("3 " + tiles[6] + "\t| " + tiles[7] + "\t| " + tiles[8] + "\t")
+    print(tiles[6] + "\t| " + tiles[7] + "\t| " + tiles[8] + "\t")
 
 # ask user for a position input
 def askForPositions():
@@ -84,7 +82,7 @@ def checkWinCondition():
         tiles[2:7:2]
         ]
     assert all(len(line) == 3 for line in lines)  # program fails if any line indexes have length > 3
-    if any(filled_with_Xs(line) or filled_with_Xs(line) for line in lines):  # Line = lines[i] (or tiles[x:x])
+    if any(filled_with_Xs(line) or filled_with_Os(line) for line in lines):  # Line = lines[i] (or tiles[x:x])
         return True
 # The any() function returns True if any element of an iterable is True. If not, it returns False.
 
@@ -114,6 +112,7 @@ while not checkWinCondition() and not checkDrawCondition():
 # Game Over printing
 if checkDrawCondition():
     print("GAME OVER! DRAW!")
+    # refresh the screen, board, and tiles if I want a gameplay loop
 elif isXTurn:
     print("GAME OVER O Wins")
 else:
