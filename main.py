@@ -110,13 +110,13 @@ while not checkWinCondition() and not checkDrawCondition():
     printBoard(1)
 
 # Game Over printing
-if checkDrawCondition():
+if isXTurn and checkWinCondition():
+    print("GAME OVER O Wins")
+elif not isXTurn and checkWinCondition():
+    print("GAME OVER X Wins")
+elif checkDrawCondition():
     print("GAME OVER! DRAW!")
     # refresh the screen, board, and tiles if I want a gameplay loop
-elif isXTurn:
-    print("GAME OVER O Wins")
-else:
-    print("GAME OVER X Wins")
 
 
 exit(0)
